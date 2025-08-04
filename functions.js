@@ -219,10 +219,12 @@ function getEvents(d) {
 
 // this is the actual event listener
 
-document.getElementById("dateInput").addEventListener("change", function () {
-  var input = this.value;
-  var dateEntered = new Date(input);
-  console.log(input); //e.g. 2015-11-13
+document.getElementById("dateInput").addEventListener("input", event => {
+  //var input = this.value;
+  var dateEntered = new Date(event.target.value);
+  //var v = new Date(input);
+ // console.log(input); //e.g. 2015-11-13
+  console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
   // getEvents(dateEntered)
 });
