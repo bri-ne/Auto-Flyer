@@ -81,33 +81,7 @@ function getEvents(d) {
     });
 }
 
-// Function to generate the OAuth URL and redirect the user
-const GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
-const GOOGLE_CLIENT_ID =  ${{ secrets.GCAL_KEY }} ; // Replace with your client ID
-const GOOGLE_CALLBACK_URL = "http://localhost:3000";
-const GOOGLE_OAUTH_SCOPES = [
-  "https://www.googleapis.com/auth/userinfo.email",
-  "https://www.googleapis.com/auth/userinfo.profile",
-];
 
-function initiateGoogleOAuth() {
-  const state = crypto.randomUUID(); // Generate a CSRF token
-  localStorage.setItem("oauth_state", state);
-
-  const params = new URLSearchParams({
-    client_id: GOOGLE_CLIENT_ID,
-    redirect_uri: GOOGLE_CALLBACK_URL,
-    access_type: "offline",
-    response_type: "code",
-    state: state,
-    scope: GOOGLE_OAUTH_SCOPES.join(" "),
-  });
-
-  const GOOGLE_OAUTH_CONSENT_SCREEN_URL = `${GOOGLE_OAUTH_URL}?${params.toString()}`;
-  window.location.href = GOOGLE_OAUTH_CONSENT_SCREEN_URL;
-};
-
-initiateGoogleOAuth();
 
 // this is the actual event listener
 
