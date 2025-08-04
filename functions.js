@@ -184,7 +184,7 @@ function showEvents(gcalOutput) {
   if (subMo[0] == subMo[4]) {
     subtitle.appendChild(subMo[0]);
   } else {
-    subtitle.appendChild(subMo[0] + ' - ' subMo[4])
+    subtitle.appendChild(subMo[0] + ' - ' + subMo[4])
   }
 
 }
