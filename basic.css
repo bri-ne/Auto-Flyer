@@ -1,0 +1,119 @@
+body {
+  font-family: 'Work Sans', sans-serif;
+  width: 100%;
+  color: #1f1f1f;
+  margin: 0;
+  box-sizing: border-box;
+}
+.input-box{
+ visibility:visible;
+ position:absolute;
+ top:1em;
+ right:1em;
+ align-self:flex-end;
+ border: 2px solid black;
+}
+.title-container {
+  display: flex;
+  flex-flow: row;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgb(129, 9, 9);
+}
+
+.title {
+  background-image: url('./images/PSLogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: rgb(129, 9, 9);
+  width: 80%;
+  height: auto;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-flow: row;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+
+}
+
+.subtitle {
+  width: 100%;
+  border: 3px rgb(129, 9, 9) solid;
+  padding: 1rem;
+  margin: 0.5em;
+  font-weight: 900;
+  font-style: italic;
+  font-size: x-large;
+  justify-self: center;
+}
+
+.calevent {
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: 'Nunito', sans-serif;
+  font-size: medium;
+  font-style: italic;
+  width: 66%;
+  border: 3px black solid;
+  padding: 1em;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.eventdate {
+  display: flex;
+  flex-flow: column;
+  width: 15%;
+  border:  rgb(129, 9, 9) 3px solid;
+  background-color: rgb(129, 9, 9);
+  color:whitesmoke;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.date-mo {
+  font-style: italic;
+  text-transform: uppercase;
+
+}
+
+.date-day {
+  font-style: bold;
+  font-size: 3rem;
+}
+.event-title{
+  font-style: bold;
+  font-weight:900;
+  font-size: 2rem;
+  padding-bottom: .5rem;
+}
+.event-time{
+  
+  padding-bottom: .25rem;
+
+}
+.event-location{
+  padding-bottom: .25rem;
+}
+
+
+@media print {
+  .input-box{
+    visibility: hidden;
+  }
+}
