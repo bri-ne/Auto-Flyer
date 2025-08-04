@@ -12,8 +12,3 @@ jobs:
     steps:
       - name: Vars
         run: echo $MY_ENV_VAR
-      - name: Auth It
-        run: |
-          curl --request POST \
-          --url https://accounts.google.com/o/oauth2/v2/auth \
-          --header 'client_id: ${{ secrets.GCAL_KEY }}'
