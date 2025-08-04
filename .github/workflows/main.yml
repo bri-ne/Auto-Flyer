@@ -1,0 +1,14 @@
+name: authorize
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VAR: ${{ secrets.gcal_key }}
+    steps:
+      - name: My Step
+        run: echo $MY_ENV_VAR
