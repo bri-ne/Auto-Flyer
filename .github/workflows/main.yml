@@ -8,7 +8,7 @@ jobs:
   my-job:
     runs-on: ubuntu-latest
     env:
-      MY_ENV_VAR: ${{ secrets.gcal_key }}
+      MY_ENV_VAR: ${{ secrets.GCAL_KEY }}
     steps:
       - name: My Step
         run: echo $MY_ENV_VAR
