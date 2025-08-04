@@ -196,7 +196,7 @@ function getEvents(d) {
   const apiUrl = 'https://www.googleapis.com/calendar/v3/calendars/9srf5u5iffu2dg06625hbvhbj8@group.calendar.google.com/events?' + new URLSearchParams({
     maxResults: 5,
     timeMin: d,
-    orderBy: startTime
+    orderBy: 'startTime'
   })
 
   // Make a GET request
