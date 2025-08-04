@@ -227,6 +227,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
   // getEvents(dateEntered)
+  getEvents(dateEntered);
 });
 
 
