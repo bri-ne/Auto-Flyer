@@ -218,7 +218,7 @@ function getEvents(d) {
 
 // Function to generate the OAuth URL and redirect the user
 const GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
-const GOOGLE_CLIENT_ID = process.env.gcal_key; // Replace with your client ID
+const GOOGLE_CLIENT_ID =  gcal_key; // Replace with your client ID
 const GOOGLE_CALLBACK_URL = "http://localhost:3000";
 const GOOGLE_OAUTH_SCOPES = [
   "https://www.googleapis.com/auth/userinfo.email",
