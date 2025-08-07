@@ -8,12 +8,12 @@ jobs:
   my-job:
     runs-on: ubuntu-latest
     env:
-      MY_ENV_VAR: ${{ secrets.GCAL_KEY }}
+      MY_ENV_VAR: ${{ secrets.GCS_KEY }}
     steps:
       - name: Vars
         run: echo $MY_ENV_VAR
-      - name: Auth It
-        run: |
-          curl --request POST \
-          --url https://accounts.google.com/o/oauth2/v2/auth \
-          --header 'client_id: ${{ secrets.GCAL_KEY }}'
+      - name: Authenticate to Google Cloud
+        uses: 'actions/checkout@v4' # Must come first!
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCS_KEY }}' # Replace with the name of your GitHub Actions secret
