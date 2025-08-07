@@ -1,4 +1,5 @@
 //== populating events ==//
+/* this script pull a json file from github repo and populates the */
 /* template 
   <div class="container">
     <div class="eventdate">
@@ -16,12 +17,23 @@
 */
 
 
+//== Packages==//
+//import * as core from "@actions/core";
+//import * as github from "@actions/github";
+import { Octokit } from "octokit";
+
+
+//== Variables ==//
 const subtitle = document.querySelector(".subtitle")
 var subMo = [];
+// ==the github token ==//
+const octokit = new Octokit({
+  auth: process.env.GTOKEN,
+});
 
 
 
-
+//== Funcations ==//
 function addEvent(edate, mo, etitle, etime, elocation, elink) {
   var div = document.createElement('div');
   var h_edate = `<div class="eventdate"><div class="date-day">${edate}</div><div class="date-mo">${mo}</div></div>`
@@ -34,48 +46,45 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
   document.body.appendChild(div);
 }
 
-function showEvents(gcalOutput) {
+function showEvents(gcalOutput, d) {
   /* this will hold the for loop on addEvent*/
-  for (let i = 0; i < 6; i++) {
-    let edate = getDate(gcalOutput.items[i].start.dateTime);
-    let mo = getMonth(gcalOutput.items[i].start.dateTime);
-    let etitle = gcalOutput.items[i].summary;
-    let etime = toLocaleTimeString(gcalOutput.items[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput.items[i].end.dateTime) // will need to do some formatting here
-    let elocation = gcalOutput.items[i].location
-    //let elink = gcalOutput.items[i][whatever]
-    subMo.push(mo)
-    addEvent(edate, mo, etitle, etime, elocation, elink);
+  /*first filter the gcaloutput to only the next 5 events based on the date filter*/
+  for (let k = 0; k < length(gcalOutput); k++) {
+    if (getDate(gcalOutput.items[k].start.dateTime) < d) {
+      console.log('{gcalOutput.items[i].summary} is not in time range')
+    } else {
+      for (let i = 0; i < 6; i++) {
+        let edate = getDate(gcalOutput.items[i].start.dateTime);
+        let mo = getMonth(gcalOutput.items[i].start.dateTime);
+        let etitle = gcalOutput.items[i].summary;
+        let etime = toLocaleTimeString(gcalOutput.items[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput.items[i].end.dateTime) // will need to do some formatting here
+        let elocation = gcalOutput.items[i].location
+        //let elink = gcalOutput.items[i][whatever]
+        subMo.push(mo)
+        addEvent(edate, mo, etitle, etime, elocation, elink);
+      }
+      if (subMo[0] == subMo[4]) {
+        subtitle.appendChild(subMo[0]);
+      } else {
+        subtitle.appendChild(subMo[0] + ' - ' + subMo[4])
+      }
+    }
   }
-  if (subMo[0] == subMo[4]) {
-    subtitle.appendChild(subMo[0]);
-  } else {
-    subtitle.appendChild(subMo[0] + ' - ' + subMo[4])
-  }
-
 }
 
 
-function getEvents(d) {
-  /* this function will grab the information from google calendar
-  d will be the start date to query the google calendar api */
-  const apiUrl = 'https://www.googleapis.com/calendar/v3/calendars/9srf5u5iffu2dg06625hbvhbj8@group.calendar.google.com/events?' + new URLSearchParams({
-    maxResults: 5,
-    timeMin: d,
-    orderBy: 'startTime'
+async function getEvents(d) {
+  await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'bri-ne',
+    repo: 'auto-flyer',
+    path: 'output.json',
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  }).then(data => {
+    console.log(data);
+    showEvents(data.contents, d);
   })
-
-  // Make a GET request
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      showEvents(data);
-    })
     .catch(error => {
       console.error('Error:', error);
     });
@@ -83,21 +92,19 @@ function getEvents(d) {
 
 
 
+//== Running it ==//
 // this is the actual event listener
 
 document.getElementById("dateInput").addEventListener("input", event => {
   //var input = this.value;
-  var dateEntered = new Date(event.target.value).toISOString();
+  var dateEntered = new Date(event.target.value)//.toISOString();
   //var v = new Date(input);
- // console.log(input); //e.g. 2015-11-13
+  // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
   // getEvents(dateEntered)
   getEvents(dateEntered);
 });
-
-
-
 
 
 
