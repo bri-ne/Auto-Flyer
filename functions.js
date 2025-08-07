@@ -20,7 +20,7 @@
 //== Packages==//
 //import * as core from "@actions/core";
 //import * as github from "@actions/github";
-import { Octokit } from "octokit";
+//import { Octokit } from "octokit";
 
 
 //== Variables ==//
@@ -28,7 +28,7 @@ const subtitle = document.querySelector(".subtitle")
 var subMo = [];
 // ==the github token ==//
 const octokit = new Octokit({
-  auth: process.env.GTOKEN,
+  auth: process.env.GTOKEN
 });
 
 
