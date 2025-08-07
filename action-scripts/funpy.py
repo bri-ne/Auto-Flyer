@@ -1,9 +1,9 @@
 import json
 import os
-from google_auth_oauthlib.flow import InstalledAppFlow
+#from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+#from google.oauth2.credentials import Credentials
+#from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 #import base64
@@ -18,10 +18,7 @@ calid = '9srf5u5iffu2dg06625hbvhbj8@group.calendar.google.com'
 
 def getit(calender_id):
   try:
-    creds = Credentials.from_authorized_user_file(gcstoken, scopes)
-    flow = InstalledAppFlow.from_client_secrets_file(gcstoken, scopes=scopes)
-    creds = flow.run_local_server(port=0)
-    service = build('calendar', 'v3', credentials=creds)
+    service = build('calendar', 'v3', developerKey=gcstoken)
     # Call the Calendar API
     now = datetime.datetime.now(tz=datetime.timezone.utc).isoformat()
     print("Getting the upcoming 10 events")
