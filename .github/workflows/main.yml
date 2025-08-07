@@ -8,11 +8,29 @@ jobs:
   my-job:
     runs-on: ubuntu-latest
     env:
-      MY_ENV_VAR: ${{ secrets.GCS_KEY }}
-      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TOKEN: ${{ secrets.GTOKEN }}
+
     steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
       - name: Vars
-        run: echo $MY_ENV_VAR
-      - name: runJS
+        run: echo $TOKEN
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9 #install the python needed
+      - name: Install dependencies
         run: |
-          node .github/actions-scripts/functions.js
+          python -m pip install --upgrade pip
+          if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; fi
+      - name: execute py script # run file
+        run: |
+          python action-scripts/callingFunctions.py
+      - name: Pushing the change
+        run: |
+          git config --global user.email "cervantes.blc@gmail.com"
+          git config --global user.name "brine"
+          git add --all
+          git commit -m 'my commit message'
+          git push 
