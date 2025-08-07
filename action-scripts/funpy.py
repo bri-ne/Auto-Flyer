@@ -41,5 +41,5 @@ def getit(calender_id):
   except HttpError as error:
     print(f"An error occurred: {error}")
 
-with open('data.json', 'w') as f:
+with open('output.json', 'w') as f:
     json.dump(getit(calid), f)
