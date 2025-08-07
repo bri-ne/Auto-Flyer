@@ -10,7 +10,7 @@ from googleapiclient.errors import HttpError
 import datetime
 
 
-## variables
+## variables 
 scopes = ['https://www.googleapis.com/auth/calendar']
 gcstoken = os.environ['GCSTOKEN']
 
