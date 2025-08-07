@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MY_ENV_VAR: ${{ secrets.GCS_KEY }}
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Vars
         run: echo $MY_ENV_VAR
-      - name: Authenticate to Google Cloud
-        uses: 'actions/checkout@v4' # Must come first!
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GCS_KEY }}' # Replace with the name of your GitHub Actions secret
+      - name: runJS
+        run: |
+          node .github/actions-scripts/functions.js
