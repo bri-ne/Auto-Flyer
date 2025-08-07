@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f action-scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; fi
+          if [ -f action-scripts/requirements.txt ]; then pip install -r action-scripts/requirements.txt; fi
       - name: execute py script # run file
         run: |
           python action-scripts/funpy.py
