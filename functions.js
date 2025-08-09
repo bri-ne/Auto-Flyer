@@ -94,7 +94,7 @@ async function getEvents(d) {
 
 function getEvents(d) {
 
-    showEvents(output.contents, d)
+    showEvents(JSON.parse(output), d)
     .catch(error => {
       console.error('Error:', error);
     });
