@@ -26,10 +26,11 @@
 //== Variables ==//
 const subtitle = document.querySelector(".subtitle")
 var subMo = [];
-// ==the github token ==//
+// ==the github token == //
+/*
 const octokit = new Octokit({
   auth: process.env.GTOKEN
-});
+});*/
 
 
 
@@ -72,7 +73,7 @@ function showEvents(gcalOutput, d) {
   }
 }
 
-
+/*
 async function getEvents(d) {
   await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'bri-ne',
@@ -82,6 +83,17 @@ async function getEvents(d) {
       'X-GitHub-Api-Version': '2022-11-28'
     }
   }).then(data => {
+    console.log(data);
+    showEvents(data.contents, d);
+  })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+*/
+
+async function getEvents(d) {
+  fetch('output.json').then(data => {
     console.log(data);
     showEvents(data.contents, d);
   })
