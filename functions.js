@@ -92,12 +92,13 @@ async function getEvents(d) {
 }
 */
 
-function getEvents(d) {
-  fetch("output.json")
+function getEvents(dEntered, myCallback) {
+  let caldata = fetch("output.json")
     .then(response => response.json())
     .then(json => 
-       showEvents(JSON.parse(json), d)
-      )
+      JSON.parse(json)
+      );
+  myCallback(caldata, dEntered);
 };
 
 
@@ -115,7 +116,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  getEvents(dateEntered)
+  getEvents(dateEntered, showEvents)
   //showEvents(caldata, dateEntered);
 });
 
