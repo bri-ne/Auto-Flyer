@@ -69,7 +69,8 @@ function showEvents(gcalOutput, d) {
       } else {
         subtitle.appendChild(subMo[0] + ' - ' + subMo[4])
       }
-    }
+    };
+  console.log('callback answered');
   }
 }
 
@@ -92,10 +93,31 @@ async function getEvents(d) {
 }
 */
 
-function getEvents(dEntered, myCallback) {
-  let caldata = fetch("output.json")
-    .then(response => response.json());
-  myCallback(caldata, dEntered);
+
+
+/*async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+
+  let result = await promise; // wait until the promise resolves (*)
+
+  alert(result); // "done!"
+}
+
+f();*/
+
+async function getEvents(dEntered) {
+  let promise = new Promise((fetch) => {
+    fetch("output.json")
+  }
+  );
+
+  //let value = await promise;
+  let caldata = await promise.then(response => response.json());
+  showEvents(caldata,dEntered);
+  console.log('showeventscalled')
 };
 
 
@@ -113,7 +135,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  getEvents(dateEntered, showEvents)
+  getEvents(dateEntered)
   //showEvents(caldata, dateEntered);
 });
 
