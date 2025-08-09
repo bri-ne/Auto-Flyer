@@ -94,10 +94,7 @@ async function getEvents(d) {
 
 function getEvents(dEntered, myCallback) {
   let caldata = fetch("output.json")
-    .then(response => response.json())
-    .then(json => 
-      JSON.parse(json)
-      );
+    .then(response => response.json());
   myCallback(caldata, dEntered);
 };
 
