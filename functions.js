@@ -100,10 +100,28 @@ function getEvents(d) {
     });
 }
 
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
 
+//usage:
+readTextFile("output.json", function(text){
+    var data = JSON.parse(text);
+    console.log(data);
+});
 
 //== Running it ==//
 // this is the actual event listener
+
+var caldata = readTextFile();
 
 document.getElementById("dateInput").addEventListener("input", event => {
   //var input = this.value;
@@ -113,7 +131,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
   // getEvents(dateEntered)
-  getEvents(dateEntered);
+  showEvents(caldata,dateEntered);
 });
 
 
