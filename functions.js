@@ -50,7 +50,7 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
 function showEvents(gcalOutput, d) {
   /* this will hold the for loop on addEvent*/
   /*first filter the gcaloutput to only the next 5 events based on the date filter*/
-  for (let k = 0; k < length(gcalOutput); k++) {
+  for (let k = 0; k < gcalOutput.length; k++) {
     if (getDate(gcalOutput.items[k].start.dateTime) < d) {
       console.log('{gcalOutput.items[i].summary} is not in time range')
     } else {
