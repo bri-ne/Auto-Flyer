@@ -93,7 +93,7 @@ async function getEvents(d) {
 */
 
 function getEvents(d) {
-  fetch("test.json")
+  fetch("output.json")
     .then(response => response.json())
     .then(json => 
        showEvents(JSON.parse(json), d)
