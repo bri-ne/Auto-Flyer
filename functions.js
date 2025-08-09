@@ -92,11 +92,9 @@ async function getEvents(d) {
 }
 */
 
-async function getEvents(d) {
-  fetch('output.json').then(data => {
-    console.log(data);
-    showEvents(data.contents, d);
-  })
+function getEvents(d) {
+
+    showEvents(output.contents, d)
     .catch(error => {
       console.error('Error:', error);
     });
