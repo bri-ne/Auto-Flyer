@@ -75,13 +75,13 @@ function showEvents(d) {
       console.log(`${caldata[k].summary} is not in time range`)
     } else {
       edate = cal_s.getDate();
-      mo = cal_s.getMonth();
+      mo = cal_s.toLocaleString('default', { month: 'long' });
       etitle = caldata[k].summary;
-      etime = toLocaleTimeString(cal_s) + " - " + toLocaleTimeString(cal_e) // will need to do some formatting here
+      etime = cal_s.toLocaleTimeString() + " - " + cal_e.toLocaleTimeString() // will need to do some formatting here
       elocation = caldata[k].location
       //let elink = caldata[k][whatever]
       subMo.push(mo)
-      addEvent(edate, mo, etitle, etime, elocation, elink);
+      addEvent(edate, mo, etitle, etime, elocation);//, elink);
       if (subMo[0] == subMo[4]) {
         subtitle.appendChild(subMo[0]);
       } else {
