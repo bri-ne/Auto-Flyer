@@ -25,6 +25,7 @@
 
 //== Variables ==//
 const subtitle = document.querySelector(".subtitle")
+let caldata
 var subMo = [];
 
 
@@ -119,6 +120,7 @@ function getEvents(dEntered) {
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
+    caldata = data;
     showEvents(data,dEntered);
     console.log('showeventscalled');
   })
