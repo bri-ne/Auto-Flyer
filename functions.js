@@ -28,7 +28,7 @@ function getEvents() {
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
-    caldata = data;
+    caldata = data.items;
     //showEvents(data,dEntered);
     console.log('showeventscalled');
 
@@ -64,14 +64,15 @@ function showEvents(d) {
   let etitle
   let etime
   let elocation
+
   /* this will hold the for loop on addEvent*/
   /*first filter the caldata to only the next 5 events based on the date filter*/
   for (let k = 0; k <6; k++) {
     console.log(k)
     cal_s = new Date(caldata[k].start.dateTime);
     cal_e = new Date(caldata[k].end.dateTime);
-    if (cal_s.getDate() < d) {
-      console.log('{caldata[k].summary} is not in time range')
+    if (cal_s < d) {
+      console.log(`${caldata[k].summary} is not in time range`)
     } else {
       edate = cal_s.getDate();
       mo = cal_s.getMonth();
