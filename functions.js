@@ -64,7 +64,7 @@ function showEvents(d) {
   let etitle
   let etime
   let elocation
-
+  let sub
   /* this will hold the for loop on addEvent*/
   /*first filter the caldata to only the next 5 events based on the date filter*/
   for (let k = 0; k <6; k++) {
@@ -73,8 +73,7 @@ function showEvents(d) {
     cal_e = new Date(caldata[k].end.dateTime);
     if (cal_s < d) {
       console.log(`${caldata[k].summary} is not in time range`)
-    } else {
-      edate = cal_s.getDate();
+    } else {edate = cal_s.getDate();
       mo = cal_s.toLocaleString('default', { month: 'long' });
       etitle = caldata[k].summary;
       etime = cal_s.toLocaleTimeString() + " - " + cal_e.toLocaleTimeString() // will need to do some formatting here
@@ -82,14 +81,15 @@ function showEvents(d) {
       //let elink = caldata[k][whatever]
       subMo.push(mo)
       addEvent(edate, mo, etitle, etime, elocation);//, elink);
-      if (subMo[0] == subMo[4]) {
-        subtitle.appendChild(subMo[0]);
-      } else {
-        subtitle.appendChild(subMo[0] + ' - ' + subMo[4])
-      }
-    };
-  console.log('callback answered');
-  }
+  };};
+  // setting heading
+  if (subMo[0] == subMo[4]) {
+    sub = subMo[0];
+  } else {
+    sub = subMo[0] + ' - ' + subMo[4];
+  };
+  subtitle.appendChild(sub);
+
 }
 
 
