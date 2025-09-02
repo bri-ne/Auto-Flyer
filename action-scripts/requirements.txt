@@ -1,4 +1,9 @@
-google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+#numpy==1.26.4
+#pandas==2.2.2
+requests==2.32.3
+#setuptools==72.1.0
 datetime==5.4
+json==3.13
