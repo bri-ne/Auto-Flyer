@@ -107,8 +107,9 @@ async function getEvents(dEntered) {
 
   let caldata = await promise;
   //let caldata = await promise.then(response => response.json());
+  console.log(caldata);
   showEvents(caldata,dEntered);
-  console.log('showeventscalled')
+  console.log('showeventscalled');
 };
 
 
