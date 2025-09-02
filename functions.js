@@ -119,7 +119,7 @@ function getEvents(dEntered) {
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
-    showEvents(caldata,dEntered);
+    showEvents(data,dEntered);
     console.log('showeventscalled');
   })
 }
