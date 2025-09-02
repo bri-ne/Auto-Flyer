@@ -99,7 +99,7 @@ async function getEvents(d) {
 }
 f();*/
 
-async function getEvents(dEntered) {
+/*async function getEvents(dEntered) {
   let promise = new Promise((fetch) => {
     fetch("output.json")
   }
@@ -110,8 +110,19 @@ async function getEvents(dEntered) {
   console.log(caldata);
   showEvents(caldata,dEntered);
   console.log('showeventscalled');
-};
+};*/
 
+
+
+function getEvents(dEntered) {
+  fetch("output.json")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    showEvents(caldata,dEntered);
+    console.log('showeventscalled');
+  })
+}
 
 
 
