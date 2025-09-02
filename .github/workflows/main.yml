@@ -5,7 +5,7 @@ on:
 permissions:
   contents: write
 env:
-  key: ${{secrets.key}}
+  gkey: ${{secrets.gkey}}
 
 jobs:
   build:
