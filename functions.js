@@ -129,7 +129,7 @@ function getEvents(dEntered) {
   .then((data) => {
     console.log(data);
     caldata = data;
-    showEvents(data,dEntered);
+    //showEvents(data,dEntered);
     console.log('showeventscalled');
   })
 }
@@ -149,7 +149,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
   getEvents(dateEntered)
-  //showEvents(caldata, dateEntered);
+  showEvents(caldata, dateEntered);
 });
 
 
