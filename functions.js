@@ -42,7 +42,7 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
   document.body.appendChild(div);
 }
 
-function showEvents(gcalOutput, d) {
+function showEvents(caldata, d) {
   let cal_d
   let edate
   let mo 
@@ -50,24 +50,21 @@ function showEvents(gcalOutput, d) {
   let etime
   let elocation
   /* this will hold the for loop on addEvent*/
-  /*first filter the gcaloutput to only the next 5 events based on the date filter*/
-  for (let k = 0; k < gcalOutput.length; k++) {
+  /*first filter the caldata to only the next 5 events based on the date filter*/
+  for (let k = 0; k <6; k++) {
     console.log(k)
-    cal_d = new Date(gcalOutput[k].start.dateTime).getDate();
+    cal_d = new Date(caldata[k].start.dateTime).getDate();
     if (cal_d < d) {
-      console.log('{gcalOutput[i].summary} is not in time range')
+      console.log('{caldata[k].summary} is not in time range')
     } else {
-      for (let i = 0; i < 6; i++) {
-        cal_d = new Date(gcalOutput[i].start.dateTime);
-        edate = cal_d.getDate();
-        mo = cal_d.getMonth();
-        etitle = gcalOutput[i].summary;
-        etime = toLocaleTimeString(gcalOutput[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput[i].end.dateTime) // will need to do some formatting here
-        elocation = gcalOutput[i].location
-        //let elink = gcalOutput[i][whatever]
-        subMo.push(mo)
-        addEvent(edate, mo, etitle, etime, elocation, elink);
-      }
+      edate = cal_d.getDate();
+      mo = cal_d.getMonth();
+      etitle = caldata[k].summary;
+      etime = toLocaleTimeString(caldata[k].start.dateTime) + " - " + toLocaleTimeString(caldata[k].end.dateTime) // will need to do some formatting here
+      elocation = caldata[k].location
+      //let elink = caldata[k][whatever]
+      subMo.push(mo)
+      addEvent(edate, mo, etitle, etime, elocation, elink);
       if (subMo[0] == subMo[4]) {
         subtitle.appendChild(subMo[0]);
       } else {
@@ -123,16 +120,7 @@ f();*/
 
 
 
-function getEvents(dEntered) {
-  fetch("output.json")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    caldata = data.items;
-    //showEvents(data,dEntered);
-    console.log('showeventscalled');
-  })
-}
+
 
 
 
