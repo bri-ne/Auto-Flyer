@@ -12,4 +12,4 @@ t = requests.get(r)
 data = t.json()
 
 with open('output.json', 'w') as f:
-    json.dump(data["items"], f)
+    json.dump(data, f)
