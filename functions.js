@@ -58,8 +58,9 @@ function showEvents(gcalOutput, d) {
       console.log('{gcalOutput.items[i].summary} is not in time range')
     } else {
       for (let i = 0; i < 6; i++) {
-        edate = getDate(gcalOutput.items[i].start.dateTime);
-        mo = getMonth(gcalOutput.items[i].start.dateTime);
+        cal_d = new Date(gcalOutput.items[i].start.dateTime);
+        edate = cal_d.getDate();
+        mo = cal_d.getMonth();
         etitle = gcalOutput.items[i].summary;
         etime = toLocaleTimeString(gcalOutput.items[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput.items[i].end.dateTime) // will need to do some formatting here
         elocation = gcalOutput.items[i].location
