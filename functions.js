@@ -88,7 +88,7 @@ function showEvents(d) {
   } else {
     sub = subMo[0] + ' - ' + subMo[4];
   };
-  subtitle.appendChild(sub);
+  subtitle.innerHTML += sub;
 
 }
 
