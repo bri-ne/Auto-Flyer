@@ -22,11 +22,25 @@
 //import * as github from "@actions/github";
 //import { Octokit } from "octokit";
 
+//== Getting Data ==//
+function getEvents() {
+  fetch("output.json")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    caldata = data;
+    //showEvents(data,dEntered);
+    console.log('showeventscalled');
 
+  })
+}
+getEvents();
 //== Variables ==//
 const subtitle = document.querySelector(".subtitle")
 let caldata
 var subMo = [];
+
+
 
 
 //== Funcations ==//
@@ -77,17 +91,6 @@ function showEvents(d) {
   }
 }
 
-function getEvents(callback,d) {
-  fetch("output.json")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    caldata = data;
-    //showEvents(data,dEntered);
-    console.log('showeventscalled');
-    callback(d);
-  })
-}
 
 
 
@@ -101,7 +104,8 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  getEvents( showEvents,dateEntered);
+  
+  showEvents(dateEntered);
  ;
 });
 
