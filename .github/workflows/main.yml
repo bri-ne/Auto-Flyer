@@ -2,7 +2,8 @@ name: py
 
 on:
   workflow_dispatch:
-
+permissions:
+  contents: write
 env:
   key: ${{secrets.key}}
 
