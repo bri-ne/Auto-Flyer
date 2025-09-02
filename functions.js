@@ -43,19 +43,26 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
 }
 
 function showEvents(gcalOutput, d) {
+  let cal_d
+  let edate
+  let mo 
+  let etitle
+  let etime
+  let elocation
   /* this will hold the for loop on addEvent*/
   /*first filter the gcaloutput to only the next 5 events based on the date filter*/
   for (let k = 0; k < gcalOutput.length; k++) {
-    let cal_d = new Date(gcalOutput.items[k].start.dateTime).getDate();
+    console.log(k)
+    cal_d = new Date(gcalOutput.items[k].start.dateTime).getDate();
     if (cal_d < d) {
       console.log('{gcalOutput.items[i].summary} is not in time range')
     } else {
       for (let i = 0; i < 6; i++) {
-        let edate = getDate(gcalOutput.items[i].start.dateTime);
-        let mo = getMonth(gcalOutput.items[i].start.dateTime);
-        let etitle = gcalOutput.items[i].summary;
-        let etime = toLocaleTimeString(gcalOutput.items[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput.items[i].end.dateTime) // will need to do some formatting here
-        let elocation = gcalOutput.items[i].location
+        edate = getDate(gcalOutput.items[i].start.dateTime);
+        mo = getMonth(gcalOutput.items[i].start.dateTime);
+        etitle = gcalOutput.items[i].summary;
+        etime = toLocaleTimeString(gcalOutput.items[i].start.dateTime) + " - " + toLocaleTimeString(gcalOutput.items[i].end.dateTime) // will need to do some formatting here
+        elocation = gcalOutput.items[i].location
         //let elink = gcalOutput.items[i][whatever]
         subMo.push(mo)
         addEvent(edate, mo, etitle, etime, elocation, elink);
