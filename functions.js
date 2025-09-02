@@ -42,8 +42,9 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
   document.body.appendChild(div);
 }
 
-function showEvents(caldata, d) {
-  let cal_d
+function showEvents(d) {
+  let cal_s
+  let cal_e
   let edate
   let mo 
   let etitle
@@ -53,14 +54,15 @@ function showEvents(caldata, d) {
   /*first filter the caldata to only the next 5 events based on the date filter*/
   for (let k = 0; k <6; k++) {
     console.log(k)
-    cal_d = new Date(caldata[k].start.dateTime).getDate();
-    if (cal_d < d) {
+    cal_s = new Date(caldata[k].start.dateTime);
+    cal_e = new Date(caldata[k].end.dateTime);
+    if (cal_s.getDate() < d) {
       console.log('{caldata[k].summary} is not in time range')
     } else {
-      edate = cal_d.getDate();
-      mo = cal_d.getMonth();
+      edate = cal_s.getDate();
+      mo = cal_s.getMonth();
       etitle = caldata[k].summary;
-      etime = toLocaleTimeString(caldata[k].start.dateTime) + " - " + toLocaleTimeString(caldata[k].end.dateTime) // will need to do some formatting here
+      etime = toLocaleTimeString(cal_s) + " - " + toLocaleTimeString(cal_e) // will need to do some formatting here
       elocation = caldata[k].location
       //let elink = caldata[k][whatever]
       subMo.push(mo)
@@ -75,59 +77,22 @@ function showEvents(caldata, d) {
   }
 }
 
-/*
-async function getEvents(d) {
-  await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-    owner: 'bri-ne',
-    repo: 'auto-flyer',
-    path: 'output.json',
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28'
-    }
-  }).then(data => {
+function getEvents(callback,d) {
+  fetch("output.json")
+  .then((response) => response.json())
+  .then((data) => {
     console.log(data);
-    showEvents(data.contents, d);
+    caldata = data;
+    //showEvents(data,dEntered);
+    console.log('showeventscalled');
+    callback(d);
   })
-    .catch(error => {
-      console.error('Error:', error);
-    });
 }
-*/
-
-
-
-/*async function f() {
-  let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve("done!"), 1000)
-  });
-  let result = await promise; // wait until the promise resolves (*)
-  alert(result); // "done!"
-}
-f();*/
-
-/*async function getEvents(dEntered) {
-  let promise = new Promise((fetch) => {
-    fetch("output.json")
-  }
-  );
-
-  let caldata = await promise;
-  //let caldata = await promise.then(response => response.json());
-  console.log(caldata);
-  showEvents(caldata,dEntered);
-  console.log('showeventscalled');
-};*/
-
-
-
-
 
 
 
 //== Running it ==//
 // this is the actual event listener
-
-//var caldata = readTextFile();
 
 document.getElementById("dateInput").addEventListener("input", event => {
   //var input = this.value;
@@ -136,8 +101,8 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  getEvents(dateEntered);
-  showEvents(caldata, dateEntered);
+  getEvents( showEvents,dateEntered);
+ ;
 });
 
 
