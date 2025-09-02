@@ -51,7 +51,7 @@ function showEvents(gcalOutput, d) {
   let elocation
   /* this will hold the for loop on addEvent*/
   /*first filter the gcaloutput to only the next 5 events based on the date filter*/
-  for (let k = 0; k < gcalOutput.length; k++) {
+  for (let k = 0; k < gcalOutput.items.length; k++) {
     console.log(k)
     cal_d = new Date(gcalOutput.items[k].start.dateTime).getDate();
     if (cal_d < d) {
@@ -148,7 +148,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  getEvents(dateEntered)
+  getEvents(dateEntered);
   showEvents(caldata, dateEntered);
 });
 
