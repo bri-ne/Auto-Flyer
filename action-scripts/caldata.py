@@ -6,7 +6,7 @@ key = os.environ["gkey"]
 
 calid = '9srf5u5iffu2dg06625hbvhbj8@group.calendar.google.com'
 timemin = str(dt.datetime.now().date())
-
+print(len(key))
 
 r = f'https://www.googleapis.com/calendar/v3/calendars/{calid}/events?orderBy=startTime&showDeleted=false&singleEvents=true&timeMin={timemin}T00%3A00%3A00Z&key={key}'
 t = requests.get(r)
