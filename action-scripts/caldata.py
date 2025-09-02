@@ -3,7 +3,7 @@ import os
 import datetime as dt
 import json
 key = os.environ["key"]
-print(key)
+
 calid = '9srf5u5iffu2dg06625hbvhbj8@group.calendar.google.com'
 timemin = str(dt.datetime.now().date())
 
