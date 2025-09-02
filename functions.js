@@ -26,12 +26,6 @@
 //== Variables ==//
 const subtitle = document.querySelector(".subtitle")
 var subMo = [];
-// ==the github token == //
-/*
-const octokit = new Octokit({
-  auth: process.env.GTOKEN
-});*/
-
 
 
 //== Funcations ==//
@@ -51,7 +45,8 @@ function showEvents(gcalOutput, d) {
   /* this will hold the for loop on addEvent*/
   /*first filter the gcaloutput to only the next 5 events based on the date filter*/
   for (let k = 0; k < gcalOutput.length; k++) {
-    if (getDate(gcalOutput.items[k].start.dateTime) < d) {
+    let cal_d = new Date(gcalOutput.items[k].start.dateTime).getDate();
+    if (cal_d < d) {
       console.log('{gcalOutput.items[i].summary} is not in time range')
     } else {
       for (let i = 0; i < 6; i++) {
@@ -96,16 +91,12 @@ async function getEvents(d) {
 
 
 /*async function f() {
-
   let promise = new Promise((resolve, reject) => {
     setTimeout(() => resolve("done!"), 1000)
   });
-
   let result = await promise; // wait until the promise resolves (*)
-
   alert(result); // "done!"
 }
-
 f();*/
 
 async function getEvents(dEntered) {
