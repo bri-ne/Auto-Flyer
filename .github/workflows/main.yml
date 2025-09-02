@@ -1,23 +1,18 @@
-name: authorize
+name: py
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
+env:
+  key: ${{secrets.key}}
 
 jobs:
-  my-job:
+  build:
     runs-on: ubuntu-latest
-    env:
-      GTOKEN: ${{ secrets.GTOKEN }}
-      GCSTOKEN: ${{ secrets.GCSTOKEN }}
+
     steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v4
-      - name: Vars
-        run: |
-          echo $GTOKEN
-          echo $GCSTOKEN
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
       - name: setup python
         uses: actions/setup-python@v2
         with:
@@ -28,7 +23,7 @@ jobs:
           if [ -f action-scripts/requirements.txt ]; then pip install -r action-scripts/requirements.txt; fi
       - name: execute py script # run file
         run: |
-          python action-scripts/funpy.py
+          python action-scripts/caldata.py
       - name: Pushing the change
         run: |
           git config --global user.email "cervantes.blc@gmail.com"
