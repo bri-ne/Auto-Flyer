@@ -45,7 +45,7 @@ var subMo = [];
 
 //== Funcations ==//
 function addEvent(edate, mo, etitle, etime, elocation, elink) {
-  var div = document.createElement('div');
+  var div_content = document.createElement('div');
   var h_edate = `<div class="eventdate"><div class="date-day">${edate}</div><div class="date-mo">${mo}</div></div>`
   var h_etitle = `<div class="event-title">${etitle}</div>`
   var h_etime = `<div class="event-time">${etime}</div>`
@@ -53,7 +53,7 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
   //var h_elink = `<div class="event-link">${elink}</div></div>`
   div.className = 'container';
   div.innerHTML = h_edate + '<div class="calevent">' + h_etitle + h_etime + h_elocation + /*h_elink +*/ '</div>';
-  document.body.appendChild(div);
+  document.getElementById("calcontent").appendChild(div_content);
 }
 
 function showEvents(d) {
@@ -99,6 +99,7 @@ function showEvents(d) {
 // this is the actual event listener
 
 document.getElementById("dateInput").addEventListener("input", event => {
+  document.getElementById("calcontent").innerHTML = '';
   //var input = this.value;
   var dateEntered = new Date(event.target.value)//.toISOString();
   //var v = new Date(input);

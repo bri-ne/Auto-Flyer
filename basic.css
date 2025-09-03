@@ -111,9 +111,26 @@ body {
   padding-bottom: .25rem;
 }
 
+.help-text{
+  display: flex;
+  flex-direction: column;
+  
+}
+
 
 @media print {
   .input-box{
     visibility: hidden;
   }
 }
+
+
+
+ /* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .input-box{
+    border-color: pink;
+    border: 1rem solid;
+  }
+}
+
