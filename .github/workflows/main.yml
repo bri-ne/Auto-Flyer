@@ -2,6 +2,8 @@ name: py
 
 on:
   workflow_dispatch:
+  schedule:
+      - cron: "* */1 * * *" # every hour
 permissions:
   contents: write
 env:

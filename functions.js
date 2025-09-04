@@ -68,7 +68,7 @@ function showEvents(d) {
   let upcoming = caldata.filter((item) => new Date(item.start.dateTime) > d );
   /* this will hold the for loop on addEvent*/
   /*first filter the caldata to only the next 5 events based on the date filter*/
-  for (let k = 0; k <6; k++) {
+  for (let k = 0; k <10; k++) {
     console.log(k)
     let cal_s = new Date(upcoming[k].start.dateTime);
     let cal_e = new Date(upcoming[k].end.dateTime);

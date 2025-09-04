@@ -11,11 +11,9 @@ body {
  top:1em;
  right:1em;
  visibility:visible;
+ display: flex;
 }
-.input-box{
- align-self:flex-end;
- border: 2px solid black;
-}
+
 
 .title-container {
   display: flex;
@@ -122,59 +120,96 @@ body {
   
 }
 
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
+.togg{
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  background: rgb(216, 216, 216);
+  min-width: 6rem;
+  min-height: 1rem;
+  padding: .25rem;
+  border-radius: .35rem;
+  border-color: rgb(220,220,220);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+
+.date-picker {
+  display: inline-block;
+  background: rgb(216, 216, 216);
+  min-width: 6rem;
+  min-height: 1rem;
+  border-radius: .35rem;
+  padding-right: 1rem;
+  padding-left:0.5rem;
+  border-color: rgb(220,220,220);
+  position: relative;
+  isolation: isolate;
+  margin-right: 1rem;
+
 }
 
-/* The slider */
-.slider {
+.date-picker,
+.date-picker>* {
+  cursor: text;
+  font-size: small;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.date-picker:hover {
+  background: rgb(200, 200, 200);
+}
+
+.date-picker:active {
+  background: rgba(150, 150, 150, 0.2);
+}
+
+.date-picker:focus>input[type="date"],
+.date-picker:focus-within>input[type="date"] {
+  color: #1f1f1f;
+}
+
+.date-picker:focus,
+.date-picker:focus-within {
+  box-shadow: 0 0 0 .1rem #3e0303;
+}
+
+.date-picker>.placeholder::after {
+  content: "Click for calender";
+  pointer-events: none;
   position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  inset: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  color: #222;
 }
 
-.slider:before {
+.date-picker:focus>.placeholder,
+.date-picker:focus-within>.placeholder,
+.date-picker>input[type="date"]:valid+.placeholder {
+  display: none;
+}
+
+.date-picker>input[type="date"] {
+  background: none;
+  border: none;
+  outline: none;
+  color: transparent;
+  font-family: serif;
   position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+.date-picker>input[type="date"]:valid {
+  color: #1f1f1f !important;
 }
 
 @media print {
@@ -185,11 +220,10 @@ input:checked + .slider:before {
 
 
 
- /* Extra small devices (phones, 600px and down) */
+ /* Extra small devices (phones, 600px and down) 
 @media only screen and (max-width: 600px) {
   .input-box{
-    border-color: pink;
-    border: 1rem solid;
+    color: red;
   }
-}
+}*/
 
