@@ -95,6 +95,7 @@ function showEvents(d) {
     subtitle.innerHTML += 'no events found :/';
   } else {
     subtitle.innerHTML += sub;
+    subtitle.innerHTML += ' Events';
   }
 }
 
@@ -128,18 +129,23 @@ let element = document.getElementById('element-to-print');
 const printButton = document.querySelector('#printButton');
 const d_now = new Date();
 let opt = {
-  margin: 0,//[vMargin, hMargin],
+  margin: 0.5,//[vMargin, hMargin],
   filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
   image: { type: 'jpeg', quality: 1 },
-  html2canvas: { scale: 0.75 },
+  html2canvas: {
+    scale: 1,
+    //dpi: 300,
+    //letterRendering: true,
+    useCORS: true
+  },
   jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-  pagebreak: { mode: 'avoid-all',  before: '.container'}
+  pagebreak: { mode: 'avoid-all' }
 };
 
 // New Promise-based usage:
 
-function buttprint(){
-html2pdf().set(opt).from(element).save();
+function buttprint() {
+  html2pdf().set(opt).from(element).save();
 }
 
 

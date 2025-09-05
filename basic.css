@@ -2,21 +2,22 @@ body {
   font-family: 'Work Sans', sans-serif;
   width: 100%;
   color: #1f1f1f;
-  margin: 0;
-  box-sizing: border-box;
+  margin: auto;
+  /*box-sizing: border-box;*/
   display: flex;
   flex-flow: column;
 }
 
-.nonprint{
- visibility:visible;
- display: flex;
- align-items: center;
- width: 100%;
- background-color: #1f1f1f;
- max-height: 5rem;
- justify-content: space-evenly;
- padding: 1rem;
+.nonprint {
+  visibility: visible;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #1f1f1f;
+  max-height: 5rem;
+  justify-content: space-evenly;
+  padding: 1rem;
+  flex-flow: row;
 }
 
 
@@ -49,7 +50,10 @@ body {
   height: 100%;
   width: 100%;
   justify-content: center;
+}
 
+#element-to-print {
+  width: 100%
 }
 
 .subtitle {
@@ -64,7 +68,7 @@ body {
 }
 
 .calevent {
-  background-color: rgba(218,218,218,1);
+  background-color: rgba(218, 218, 218, 1);
   font-family: 'Nunito', sans-serif;
   font-size: 1.5em;
   font-style: italic;
@@ -81,9 +85,9 @@ body {
   display: flex;
   flex-flow: column;
   width: 15%;
-  border:  rgb(129, 9, 9) 3px solid;
+  border: rgb(129, 9, 9) 3px solid;
   background-color: rgb(129, 9, 9);
-  color:whitesmoke;
+  color: whitesmoke;
   align-items: center;
   justify-content: center;
   padding: 1em;
@@ -104,43 +108,45 @@ body {
   font-size: 3rem;
 }
 
-.event-title{
+.event-title {
   font-style: bold;
-  font-weight:900;
+  font-weight: 900;
   font-size: 1.5em;
   padding-bottom: .5rem;
 }
-.event-time{
+
+.event-time {
   font-size: smaller;
   padding-bottom: .25rem;
 
 }
-.event-location{
+
+.event-location {
   padding-bottom: .25rem;
   font-size: smaller;
 }
 
-.help-text{
+.help-text {
   display: flex;
   flex-direction: column;
 }
 
-.help-text p{
-  color:white;
+.help-text p {
+  color: white;
   font-weight: bold;
   font-size: small;
-  align-items:stretch;
+  align-items: stretch;
 }
 
-.togg{
+.togg {
   display: inline-block;
   background: rgb(216, 216, 216);
   min-width: 6rem;
   min-height: 1rem;
   padding: .25rem;
   border-radius: .35rem;
-  border-color: rgb(220,220,220);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-color: rgb(220, 220, 220);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 
@@ -151,8 +157,8 @@ body {
   min-height: 1.75rem;
   border-radius: .35rem;
   padding-right: 1rem;
-  padding-left:0.5rem;
-  border-color: rgb(220,220,220);
+  padding-left: 0.5rem;
+  border-color: rgb(220, 220, 220);
   position: relative;
   isolation: isolate;
 }
@@ -161,7 +167,7 @@ body {
 .date-picker>* {
   cursor: text;
   font-size: small;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
 
@@ -214,7 +220,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
 
@@ -223,17 +229,14 @@ body {
 }
 
 @media print {
-  .nonprint{
+  .nonprint {
     visibility: hidden;
   }
 }
 
-
-
- /* Extra small devices (phones, 600px and down) 
-@media only screen and (max-width: 600px) {
-  .input-box{
-    color: red;
+/*Extra small devices (phones, 600px and down) */
+@media only screen and (max-width : 400px) {
+  .nonprint {
+    flex-flow: column;
   }
-}*/
-
+}
