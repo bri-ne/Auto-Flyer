@@ -22,39 +22,39 @@
 //import * as github from "@actions/github";
 //import { Octokit } from "octokit";
 
-//== Getting Data ==//
-function getEvents() {
-  fetch("output.json")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    caldata = data.items;
-    //showEvents(data,dEntered);
-    console.log('showeventscalled');
 
-  })
-}
-getEvents();
-//== letiables ==//
+//===================== global letiables ==================//
 const subtitle = document.querySelector(".subtitle")
 let caldata
 let subMo = [];
 
 
+//====================== Getting Data ======================//
+function getEvents() {
+  fetch("output.json")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      caldata = data.items;
+      //showEvents(data,dEntered);
+      console.log('showeventscalled');
 
+    })
+};
+getEvents();
 
-//== Funcations ==//
+//====================== Populating Flyer Funcations =======================================================//
 function addEvent(edate, mo, etitle, etime, elocation, elink) {
   let div_content = document.createElement('div');
   let h_edate = `<div class="eventdate"><div class="date-day">${edate}</div><div class="date-mo">${mo}</div></div>`
   let h_etitle = `<div class="event-title">${etitle}</div>`
   let h_etime = `<div class="event-time">${etime}</div>`
 
-  let h_elocation 
-  if (elocation === undefined){
-    h_elocation =  '<div class="event-location">TBD</div>'
-  }else{
-    h_elocation =  `<div class="event-location">${elocation}</div>`
+  let h_elocation
+  if (elocation === undefined) {
+    h_elocation = '<div class="event-location">TBD</div>'
+  } else {
+    h_elocation = `<div class="event-location">${elocation}</div>`
   }
   //let h_elink = `<div class="event-link">${elink}</div></div>`
   div_content.className = 'container edit';
@@ -65,45 +65,87 @@ function addEvent(edate, mo, etitle, etime, elocation, elink) {
 
 function showEvents(d) {
   let sub
-  let upcoming = caldata.filter((item) => new Date(item.start.dateTime) > d );
-  /* this will hold the for loop on addEvent*/
-  /*first filter the caldata to only the next 5 events based on the date filter*/
-  for (let k = 0; k <10; k++) {
+  let upcoming = caldata.filter((item) => new Date(item.start.dateTime) > d);// filter for upcoming
+
+  for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
     let cal_s = new Date(upcoming[k].start.dateTime);
     let cal_e = new Date(upcoming[k].end.dateTime);
     if (cal_s < d) {
       console.log(`${upcoming[k].summary} is not in time range`)
-    } else {let edate = cal_s.getDate();
+    } else {
+      let edate = cal_s.getDate();
       let mo = cal_s.toLocaleString('default', { month: 'long' });
       let etitle = upcoming[k].summary;
-      let etime = cal_s.toLocaleTimeString() + " - " + cal_e.toLocaleTimeString() // will need to do some formatting here
+      let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
       let elocation = upcoming[k].location
       //let elink = upcoming[k][whatever]
       subMo.push(mo)
       addEvent(edate, mo, etitle, etime, elocation);//, elink);
-  };};
-  // setting heading
-  if (subMo[0] == subMo[4]) {
+    };
+  };
+  // ==== setting heading ===//
+  if (subMo[0] == subMo.slice(-1)[0]) {
     sub = subMo[0];
   } else {
-    sub = subMo[0] + ' - ' + subMo[4];
+    sub = subMo[0] + ' - ' + subMo.slice(-1)[0];
   };
-  // if heading is undefined send error
+  // === if heading is undefined send error ===//
   if (sub === undefined) {
     subtitle.innerHTML += 'no events found :/';
   } else {
     subtitle.innerHTML += sub;
   }
-  
+}
 
+// ========  make cal details editable ===========================================//
+let editElems = document.getElementsByClassName("edit")
+const toggleButton = document.querySelector('#editToggle');
+function butttog() {
+  if (editElems[0].contentEditable === 'false') {
+    for (let j = 0; j < editElems.length; j++) {
+      editElems[j].contentEditable = "True";
+    };
+    console.log('Button is active!');
+    toggleButton.innerHTML = 'Edit ON'
+    alert('Look at you editing ;) dont forget to the update the calendar!')
+    // Insert on logic here
+  } else {
+    alert('Edit is off')
+    for (let j = 0; j < editElems.length; j++) {
+      editElems[j].contentEditable = "False";
+    }
+    console.log('Button is not active.');
+    toggleButton.innerHTML = 'Edit OFF'
+    // Insert off logic here
+  }
+
+};
+
+// ======= print the damn thing, but consistently =======//
+let element = document.getElementById('element-to-print');
+
+const printButton = document.querySelector('#printButton');
+const d_now = new Date();
+let opt = {
+  margin: 0,//[vMargin, hMargin],
+  filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
+  image: { type: 'jpeg', quality: 1 },
+  html2canvas: { scale: 0.75 },
+  jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+  pagebreak: { mode: 'avoid-all',  before: '.container'}
+};
+
+// New Promise-based usage:
+
+function buttprint(){
+html2pdf().set(opt).from(element).save();
 }
 
 
 
-//== Running it ==//
-// this is the actual event listener
-
+//========================= Running it ======================================================//
+// this is the actual event listener for date input
 document.getElementById("dateInput").addEventListener("input", event => {
   document.getElementById("calcontent").innerHTML = '';
   subtitle.innerHTML = '';
@@ -113,46 +155,20 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-  
+
   showEvents(dateEntered);
- ;
+  ;
 });
 
-
-//make cal details editable
-
-
-
-const toggleButton = document.querySelector('#editToggle');
-let editElems = document.getElementsByClassName("edit")
-
-function butttog() {
-  if (editElems[0].contentEditable==='false') {
-    for(let j = 0; j < editElems.length; j++){
-      editElems[j].contentEditable="True";
-    };
-    console.log('Button is active!');
-    toggleButton.innerHTML = 'Edit ON'
-    alert('Look at you editing ;) dont forget to the update the calendar!')
-    // Insert on logic here
-  }else{
-    alert('Edit is off')
-    for(let j = 0; j < editElems.length; j++){
-      editElems[j].contentEditable="False";
-    }
-    console.log('Button is not active.');
-    toggleButton.innerHTML = 'Edit OFF'
-    // Insert off logic here
-  }
-
-};
-
-
-// Add an event listener for the 'click' event
-toggleButton.addEventListener('click', function() {
+// Add an event listener for the edit event
+toggleButton.addEventListener('click', function () {
   butttog();
 });
 
+// Add an event listener for the download event
+printButton.addEventListener('click', function () {
+  buttprint();
+});
 
 
 
