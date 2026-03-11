@@ -76,12 +76,12 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
 //PULLING THAT ACTUAL CALENDAR EVENTS DATA
 function showEvents(d) {
   let sub
-  let upcoming = caldata.filter((item) => new Date(item['DTSTART']) > d);// filter for upcoming
+  let upcoming = caldata.filter((item) => new Date(Date.parse(toString(item.DTSTART))) > d);// filter for upcoming
 
   for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
-    let cal_s = new Date(upcoming[k]['DTSTART']);   /**event start */
-    let cal_e = new Date(upcoming[k]['DTEND']);   /**event end */
+    let cal_s = new Date(Date.parse(toString(upcoming[k].DTSTART)));   /**event start */
+    let cal_e = new Date(Date.parse(toString(upcoming[k].DTEND)));   /**event end */
     if (cal_s < d) {
       console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
