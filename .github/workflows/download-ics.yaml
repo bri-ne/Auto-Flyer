@@ -1,0 +1,25 @@
+name: Download Calendar ICS
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  download-ics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download ICS file
+        run: |
+          curl -L "${{ secrets.CALENDAR_URL }}" -o calendar.ics
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add calendar.ics
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update calendar.ics"
+          git push
