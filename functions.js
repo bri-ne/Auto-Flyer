@@ -76,23 +76,23 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
 //PULLING THAT ACTUAL CALENDAR EVENTS DATA
 function showEvents(d) {
   let sub
-  let upcoming = caldata.filter((item) => new Date(Date.parse(toString(item.DTSTART))) > d);// filter for upcoming
+  //let upcoming = caldata.filter((item) => new Date(Date.parse(toString(item.DTSTART))) > d);// filter for upcoming
 
   for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
-    let cal_s1 = upcoming[k].DTSTART
-    let cal_e1 = upcoming[k].DTEND
+    let cal_s1 = caldata[k].DTSTART
+    let cal_e1 = caldata[k].DTEND
     let cal_s = new Date(Date.parse(toString(cal_s1)));   /**event start */
     let cal_e = new Date(Date.parse(toString(cal_e1)));   /**event end */
     if (cal_s < d) {
-      console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
+      console.log(`${caldata[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
       let edate = cal_s.getDate();
       let mo = cal_s.toLocaleString('default', { month: 'long' });
-      let etitle = upcoming[k]['SUMMARY'];     
-      let edescription = upcoming[k]['SUMMARY'];                           /**event summary */
+      let etitle = caldata[k]['SUMMARY'];     
+      let edescription = caldata[k]['SUMMARY'];                           /**event summary */
       let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      let elocation = upcoming[k]['LOCATION']  /**event location */
+      let elocation = caldata[k]['LOCATION']  /**event location */
       //let elink = upcoming[k][whatever]
       subMo.push(mo)
       addEvent(edate, mo, etitle, edescription, etime, elocation);//, elink);
