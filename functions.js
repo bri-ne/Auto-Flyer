@@ -80,8 +80,10 @@ function showEvents(d) {
 
   for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
-    let cal_s = new Date(Date.parse(toString(upcoming[k].DTSTART)));   /**event start */
-    let cal_e = new Date(Date.parse(toString(upcoming[k].DTEND)));   /**event end */
+    let cal_s1 = upcoming[k].DTSTART
+    let cal_e1 = upcoming[k].DTEND
+    let cal_s = new Date(Date.parse(toString(cal_s1)));   /**event start */
+    let cal_e = new Date(Date.parse(toString(cal_e1)));   /**event end */
     if (cal_s < d) {
       console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
