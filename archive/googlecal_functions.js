@@ -35,7 +35,7 @@ function getEvents() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      caldata = data['VCALENDAR'][0]['VEVENT']; /**array of events */
+      caldata = data.items;
       //showEvents(data,dEntered);
       console.log('showeventscalled');
 
@@ -44,20 +44,11 @@ function getEvents() {
 getEvents();
 
 //====================== Populating Flyer Funcations =======================================================//
-
-//CREATING THE HTML
-function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
+function addEvent(edate, mo, etitle, etime, elocation, elink) {
   let div_content = document.createElement('div');
   let h_edate = `<div class="eventdate"><div class="date-day">${edate}</div><div class="date-mo">${mo}</div></div>`
   let h_etitle = `<div class="event-title">${etitle}</div>`
   let h_etime = `<div class="event-time">${etime}</div>`
-  
-  let h_description
-  if (edescription === undefined) {
-    h_description = ''
-  } else {
-    h_description = `<div class="event-description">${edescription}</div>`
-  }
 
   let h_elocation
   if (elocation === undefined) {
@@ -68,32 +59,29 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
   //let h_elink = `<div class="event-link">${elink}</div></div>`
   div_content.className = 'container edit';
   div_content.contentEditable = 'False';
-  div_content.innerHTML = h_edate + '<div class="calevent">' + h_etitle + h_description + h_etime + h_elocation + /*h_elink +*/ '</div>';
+  div_content.innerHTML = h_edate + '<div class="calevent">' + h_etitle + h_etime + h_elocation + /*h_elink +*/ '</div>';
   document.getElementById("calcontent").appendChild(div_content);
 }
 
-
-//PULLING THAT ACTUAL CALENDAR EVENTS DATA
 function showEvents(d) {
   let sub
-  let upcoming = caldata.filter((item) => new Date(item['DTSTART']) > d);// filter for upcoming
+  let upcoming = caldata.filter((item) => new Date(item.start.dateTime) > d);// filter for upcoming
 
   for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
-    let cal_s = new Date(upcoming[k]['DTSTART']);   /**event start */
-    let cal_e = new Date(upcoming[k]['DTEND']);   /**event end */
+    let cal_s = new Date(upcoming[k].start.dateTime);
+    let cal_e = new Date(upcoming[k].end.dateTime);
     if (cal_s < d) {
-      console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
+      console.log(`${upcoming[k].summary} is not in time range`)
     } else {
       let edate = cal_s.getDate();
       let mo = cal_s.toLocaleString('default', { month: 'long' });
-      let etitle = upcoming[k]['SUMMARY'];     
-      let edescription = upcoming[k]['SUMMARY'];                           /**event summary */
+      let etitle = upcoming[k].summary;
       let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      let elocation = upcoming[k]['LOCATION']  /**event location */
+      let elocation = upcoming[k].location
       //let elink = upcoming[k][whatever]
       subMo.push(mo)
-      addEvent(edate, mo, etitle, edescription, etime, elocation);//, elink);
+      addEvent(edate, mo, etitle, etime, elocation);//, elink);
     };
   };
   // ==== setting heading ===//

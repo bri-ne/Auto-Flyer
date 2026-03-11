@@ -121,6 +121,9 @@ body {
 
 }
 
+.event-description{
+  font-size: smaller;
+}
 .event-location {
   padding-bottom: .25rem;
   font-size: smaller;
