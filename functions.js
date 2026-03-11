@@ -80,10 +80,10 @@ function showEvents(d) {
 
   for (let k = 0; k < 6; k++) { // then grab the next 10
     console.log(k)
-    let cal_s1 = caldata[k].DTSTART
-    let cal_e1 = caldata[k].DTEND
-    let cal_s = new Date(Date.parse(toString(cal_s1)));   /**event start */
-    let cal_e = new Date(Date.parse(toString(cal_e1)));   /**event end */
+    let cal_s1 = caldata[k].DTSTART.slice(0,4)+"-"+caldata[k].DTSTART.slice(4,6)+"-"+caldata[k].DTSTART.slice(6,11)+":"+caldata[k].DTSTART.slice(11,13)+":"+caldata[k].DTSTART.slice(13,)
+    let cal_e1 = caldata[k].DTEND.slice(0,4)+"-"+caldata[k].DTEND.slice(4,6)+"-"+caldata[k].DTEND.slice(6,11)+":"+caldata[k].DTEND.slice(11,13)+":"+caldata[k].DTEND.slice(13,)
+    let cal_s = new Date(Date.parse(cal_s1.toString()));   /**event start */
+    let cal_e = new Date(Date.parse(cal_e1.toString()));   /**event end */
     if (cal_s < d) {
       console.log(`${caldata[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
