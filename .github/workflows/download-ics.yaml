@@ -2,7 +2,7 @@ name: Download Calendar ICS
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight
+    -  cron: "* */1 * * *" # every hour
   workflow_dispatch: # Allows manual triggering
 permissions:
   contents: write
@@ -16,7 +16,17 @@ jobs:
       - name: Download ICS file
         run: |
           curl -L "${{ secrets.CALENDAR_URL }}" -o calendar.ics
-
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9 #install the python needed
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f action-scripts/requirements.txt ]; then pip install -r action-scripts/requirements.txt; fi
+      - name: execute py script # run file
+        run: |
+          python action-scripts/newcaldata.py
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
