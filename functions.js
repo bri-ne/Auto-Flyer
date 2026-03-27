@@ -29,23 +29,62 @@ let caldata
 let subMo = [];
 
 
-//====================== Getting Data ======================//
+//========= fn for cleaning timestamp on cal data =======================================//
+function cleanalert() {
+  console.log("the cleaning is happening");
+};
+cleanalert();
+function dateclean(eventlist, col,colname) {
+  let ev
+  let y 
+  let m
+  let day 
+  let t1
+  let t2
+  try{
+    for (i in eventlist) {
+      ev = eventlist[i];
+      y = ev[col];//.slice(0,4);
+      m = ev[col];//.slice(4,6);
+      day = ev[col];//.slice(6,11);
+      t1 = ev[col];//.slice(11,13);
+      t2 = ev[col];//.slice(13,);
+      cleandate = y.slice(0,4)+"-"+m.slice(4,6)+"-"+day.slice(6,11)+":"+t1.slice(11,13)+":"+t2.slice(13,);
+      cleandate = new Date(cleandate);
+      eventlist[i][colname] = cleandate; //new Date(cleandate);
+    };
+    cleanalert();
+  }
+  catch(err) {
+  console.log(err.message);
+  }
+  return eventlist; 
+};
+
+
+//====================== Getting Data ===================================================//
 function getEvents() {
   fetch("output.json")
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
       caldata = data['VCALENDAR'][0]['VEVENT']; /**array of events */
-      //showEvents(data,dEntered);
       console.log('showeventscalled');
-
-    })
+    });
 };
+
 getEvents();
+
+
+
+
+
+//dateclean(caldata, "DTSTART", "DTSTARTCLEAN"); /* clean those dates */
+//caldata = dateclean(caldata, "DTEND", "DTENDCLEAN"); /* clean those dates */
 
 //====================== Populating Flyer Funcations =======================================================//
 
-//CREATING THE HTML
+//CREATING THE HTML ======
 function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
   let div_content = document.createElement('div');
   let h_edate = `<div class="eventdate"><div class="date-day">${edate}</div><div class="date-mo">${mo}</div></div>`
@@ -73,29 +112,53 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
 }
 
 
-//PULLING THAT ACTUAL CALENDAR EVENTS DATA
-function showEvents(d) {
-  let sub
-  //let upcoming = caldata.filter((item) => new Date(Date.parse(toString(item.DTSTART))) > d);// filter for upcoming
 
-  for (let k = 0; k < 6; k++) { // then grab the next 10
+
+//Filter function =====
+// 
+//function calfilter(eventlist,d) {
+//  for (let j = 0; j < eventlist.length; j++) {
+//      eventlist.DTSTARTCLEAN = new Date(eventlist.DTSTART.slice(0,4)+"-"+eventlist.DTSTART.slice(4,6)+"-"+eventlist.DTSTART.slice(6,11)+":"+eventlist.DTSTART.slice(11,13)+":"+eventlist.DTSTART.slice(13,))
+ //     eventlist.DTENDCLEAN = new Date(eventlist.DTEND.slice(0,4)+"-"+eventlist.DTEND.slice(4,6)+"-"+eventlist.DTEND.slice(6,11)+":"+eventlist.DTEND.slice(11,13)+":"+eventlist.DTEND.slice(13,))
+ //   }
+ // caldata.DTSTARTCLEAN = "value3";
+ // return eventlist => 10;
+//}
+
+//PULLING THE ACTUAL CALENDAR EVENTS DATA
+function showEvents(d) {
+  subMo.length = 0;
+  let sub
+  let cal_s
+  let cal_e
+  ///======================== formatting data =========//
+  dateclean(caldata, "DTSTART", "DTSTARTCLEAN");
+  dateclean(caldata, "DTEND", "DTENDCLEAN");
+  let upcoming = caldata.filter((item) => item.DTSTARTCLEAN > d);// filter for upcoming
+
+
+  for (let k = 0; k < 8; k++) { // then grab the next 10
     console.log(k)
-    let cal_s1 = caldata[k].DTSTART.slice(0,4)+"-"+caldata[k].DTSTART.slice(4,6)+"-"+caldata[k].DTSTART.slice(6,11)+":"+caldata[k].DTSTART.slice(11,13)+":"+caldata[k].DTSTART.slice(13,)
-    let cal_e1 = caldata[k].DTEND.slice(0,4)+"-"+caldata[k].DTEND.slice(4,6)+"-"+caldata[k].DTEND.slice(6,11)+":"+caldata[k].DTEND.slice(11,13)+":"+caldata[k].DTEND.slice(13,)
-    let cal_s = new Date(Date.parse(cal_s1.toString()));   /**event start */
-    let cal_e = new Date(Date.parse(cal_e1.toString()));   /**event end */
+    cal_s = upcoming[k].DTSTARTCLEAN;   /**event start */
+    cal_e = upcoming[k].DTENDCLEAN;   /**event end */
     if (cal_s < d) {
-      console.log(`${caldata[k]['SUMMARY']} is not in time range`) /**event summary */
+      console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
-      let edate = cal_s.getDate();
-      let mo = cal_s.toLocaleString('default', { month: 'long' });
-      let etitle = caldata[k]['SUMMARY'];     
-      let edescription = caldata[k]['SUMMARY'];                           /**event summary */
-      let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      let elocation = caldata[k]['LOCATION']  /**event location */
-      //let elink = upcoming[k][whatever]
-      subMo.push(mo)
-      addEvent(edate, mo, etitle, edescription, etime, elocation);//, elink);
+      try{
+        let edate = cal_s.getDate();
+        let mo = cal_s.toLocaleString('default', { month: 'long' });
+        let etitle = upcoming[k]['SUMMARY'];     
+        let edescription = upcoming[k]['SUMMARY'];                           /**event summary */
+        let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        let elocation = upcoming[k]['LOCATION'].replaceAll('\\','').slice(0,upcoming[k]['LOCATION'].replaceAll('\\','').lastIndexOf(' Philadelphia,')) /**event location */
+        //let elink = upcoming[k][whatever]
+        subMo.push(mo)
+        addEvent(edate, mo, etitle, edescription, etime, elocation);//, elink);
+      }
+      catch(err){
+        console.log("showevents has errored:")
+        console.log(err.message);
+      }
     };
   };
   // ==== setting heading ===//
@@ -113,7 +176,7 @@ function showEvents(d) {
   }
 }
 
-// ========  make cal details editable ===========================================//
+// ========  make cal details editable ==================================================================//
 let editElems = document.getElementsByClassName("edit")
 const toggleButton = document.querySelector('#editToggle');
 function butttog() {
@@ -137,7 +200,7 @@ function butttog() {
 
 };
 
-// ======= print the damn thing, but consistently =======//
+// ======= print the damn thing, but consistently ==================================================//
 let element = document.getElementById('element-to-print');
 
 const printButton = document.querySelector('#printButton');
@@ -147,9 +210,9 @@ let opt = {
   filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
   image: { type: 'jpeg', quality: 1 },
   html2canvas: {
-    scale: 1,
-    //dpi: 300,
-    //letterRendering: true,
+    scale: 2,
+    dpi: 300,
+    letterRendering: true,
     useCORS: true
   },
   jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
@@ -164,6 +227,10 @@ function buttprint() {
 
 
 
+
+
+
+
 //========================= Running it ======================================================//
 // this is the actual event listener for date input
 document.getElementById("dateInput").addEventListener("input", event => {
@@ -175,7 +242,7 @@ document.getElementById("dateInput").addEventListener("input", event => {
   // console.log(input); //e.g. 2015-11-13
   console.log(event);
   console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
-
+  
   showEvents(dateEntered);
   ;
 });

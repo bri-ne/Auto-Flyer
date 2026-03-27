@@ -25,16 +25,20 @@ body {
   display: flex;
   flex-flow: row;
   height: 100%;
-  width: 100%;
+  width: 95%;
   align-items: center;
   justify-content: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  padding-left:1rem;
+  padding-right:1rem;
   background-color: rgb(129, 9, 9);
+  color:#f1f1f1;
+  font-weight: 600;
 }
 
 .title {
-  background-image: url('./images/PSLogo.png');
+  background-image: url('./images/blogo.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-color: rgb(129, 9, 9);
@@ -50,6 +54,15 @@ body {
   height: 100%;
   width: 100%;
   justify-content: center;
+}
+
+.blurb-container {
+  height: 100%;
+  width: 95%;
+  font-weight: 200;
+  padding-left: 30px;
+  padding-right: 50px;
+  font-size: 14px;
 }
 
 #element-to-print {
@@ -95,6 +108,7 @@ body {
   margin-left: 0.5em;
   margin-top: 0.5em;
   margin-bottom: 1em;
+  font-weight:bold;
 }
 
 .date-mo {
@@ -104,14 +118,12 @@ body {
 }
 
 .date-day {
-  font-style: bold;
   font-size: 3rem;
 }
 
 .event-title {
-  font-style: bold;
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: 1em;
   padding-bottom: .5rem;
 }
 
