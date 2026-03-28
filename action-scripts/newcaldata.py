@@ -1,6 +1,6 @@
 import jicson
 import json
-import ics2csv.py as ic
+import ics2csv as ic
 
 with open('output.json', 'w') as f:
     json.dump(jicson.fromFile('./calendar.ics'), f)
