@@ -92,7 +92,7 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
   let h_etime = `<div class="event-time">${etime}</div>`
   
   let h_description
-  if (edescription === undefined) {
+  if (edescription === undefined || edescription == 'undefined') {
     h_description = ''
   } else {
     h_description = `<div class="event-description">${edescription}</div>`
@@ -125,6 +125,10 @@ function addEvent(edate, mo, etitle, etime, elocation, edescription, elink) {
  // return eventlist => 10;
 //}
 
+function cleanlocal(l,li){
+  return l[li]['LOCATION'].replaceAll('\\','').slice(0,l[li]['LOCATION'].replaceAll('\\','').lastIndexOf(' Philadelphia,')); /**event location */
+};
+
 //PULLING THE ACTUAL CALENDAR EVENTS DATA
 function showEvents(d) {
   subMo.length = 0;
@@ -139,8 +143,10 @@ function showEvents(d) {
 
   for (let k = 0; k < 8; k++) { // then grab the next 10
     console.log(k)
-    cal_s = upcoming[k].DTSTARTCLEAN;   /**event start */
-    cal_e = upcoming[k].DTENDCLEAN;   /**event end */
+    if(upcoming[k].DTSTARTCLEAN && upcoming[k].DTENDCLEAN){
+      cal_s = upcoming[k].DTSTARTCLEAN;   /**event start */
+      cal_e = upcoming[k].DTENDCLEAN;   /**event end */
+    }
     if (cal_s < d) {
       console.log(`${upcoming[k]['SUMMARY']} is not in time range`) /**event summary */
     } else {
@@ -148,9 +154,22 @@ function showEvents(d) {
         let edate = cal_s.getDate();
         let mo = cal_s.toLocaleString('default', { month: 'long' });
         let etitle = upcoming[k]['SUMMARY'];     
-        let edescription = upcoming[k]['DESCRIPTION'];                           /**event summary */
-        let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-        let elocation = upcoming[k]['LOCATION'].replaceAll('\\','').slice(0,upcoming[k]['LOCATION'].replaceAll('\\','').lastIndexOf(' Philadelphia,')) /**event location */
+        let edescription 
+        let elocation 
+        let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        if(upcoming[k]['DESCRIPTION']){
+          edescription = upcoming[k]['DESCRIPTION'];
+        }else{
+          edescription = '';
+        };
+        
+        
+        if(upcoming[k]['LOCATION'] && upcoming[k]['LOCATION'] != undefined){
+          elocation = cleanlocal(upcoming,k);
+        }else{
+          elocation = '';
+        }
         //let elink = upcoming[k][whatever]
         subMo.push(mo)
         addEvent(edate, mo, etitle, edescription, etime, elocation);//, elink);
@@ -224,7 +243,7 @@ let opt_mobile = {
   filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
   image: { type: 'jpeg', quality: 1 },
   html2canvas: {
-    scale: 1,
+    scale: 1.75,
     dpi: 300,
     letterRendering: true,
     useCORS: true
