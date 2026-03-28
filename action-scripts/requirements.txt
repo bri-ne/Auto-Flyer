@@ -2,3 +2,5 @@
 # $ conda create --name <env> --file <this file>
 # platform: win-64
 jicson
+ics
+csv
