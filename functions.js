@@ -148,7 +148,7 @@ function showEvents(d) {
         let edate = cal_s.getDate();
         let mo = cal_s.toLocaleString('default', { month: 'long' });
         let etitle = upcoming[k]['SUMMARY'];     
-        let edescription = upcoming[k]['SUMMARY'];                           /**event summary */
+        let edescription = upcoming[k]['DESCRIPTION'];                           /**event summary */
         let etime = cal_s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + " - " + cal_e.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
         let elocation = upcoming[k]['LOCATION'].replaceAll('\\','').slice(0,upcoming[k]['LOCATION'].replaceAll('\\','').lastIndexOf(' Philadelphia,')) /**event location */
         //let elink = upcoming[k][whatever]
@@ -205,7 +205,7 @@ let element = document.getElementById('element-to-print');
 
 const printButton = document.querySelector('#printButton');
 const d_now = new Date();
-let opt = {
+let opt_desktop = {
   margin: 0.5,//[vMargin, hMargin],
   filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
   image: { type: 'jpeg', quality: 1 },
@@ -219,10 +219,27 @@ let opt = {
   pagebreak: { mode: 'avoid-all' }
 };
 
+let opt_mobile = {
+  margin: 0.5,//[vMargin, hMargin],
+  filename: `PS_upcomingevents_${d_now.toLocaleDateString()}.pdf`,
+  image: { type: 'jpeg', quality: 1 },
+  html2canvas: {
+    scale: 1,
+    dpi: 300,
+    letterRendering: true,
+    useCORS: true
+  },
+  jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+  pagebreak: { mode: 'avoid-all' }
+};
 // New Promise-based usage:
 
 function buttprint() {
-  html2pdf().set(opt).from(element).save();
+  if(window.screen.width > 1320){
+    html2pdf().set(opt_desktop).from(element).save();
+  }else{
+    html2pdf().set(opt_mobile).from(element).save();
+  } 
 }
 
 
